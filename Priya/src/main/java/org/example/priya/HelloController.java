@@ -161,19 +161,18 @@ public class HelloController implements Initializable {
 
     @FXML
     public void onDeleteButtonClick(ActionEvent actionEvent) {
-        // Get the ID from the TextField (assuming iid is your TextField for ID input)
         String id = iid.getText();
 
-        // Check if the ID is not empty
+
         if (id.isEmpty()) {
             System.out.println("ID cannot be empty. Please enter a valid ID.");
             return; // Exit the method if ID is empty
         }
 
         // Database connection parameters
-        String jdbcUrl = "jdbc:mysql://localhost:3306/db_lab1_priya"; // Change to your DB URL
-        String dbUser = "root"; // Your DB username
-        String dbPassword = ""; // Your DB password
+        String jdbcUrl = "jdbc:mysql://localhost:3306/db_lab1_priya";
+        String dbUser = "root";
+        String dbPassword = "";
 
         // SQL delete query
         String query = "DELETE FROM tbl_tution WHERE id = ?";
@@ -182,20 +181,19 @@ public class HelloController implements Initializable {
         try (Connection connection = DriverManager.getConnection(jdbcUrl, dbUser, dbPassword);
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            // Set the ID parameter
+
             preparedStatement.setString(1, id);
 
-            // Execute the delete query
             int rowsAffected = preparedStatement.executeUpdate();
 
-            // Check if any rows were affected
+
             if (rowsAffected > 0) {
                 System.out.println("Delete successful. Rows affected: " + rowsAffected);
             } else {
                 System.out.println("No rows affected. Check if the ID exists.");
             }
 
-            // Optionally refresh the table or perform any other required actions
+
             onHelloButtonClick();
         } catch (SQLException e) {
             System.err.println("Delete failed!");
